@@ -28,3 +28,11 @@ uses a one-byte block size in Cipher Block Chaining to amplify changes, hence th
 4. Trim *S* to the length of *H'*
 5. Encrypt *S* using the Password and IV, forming *S'*
 6. Return *S'* as the operation's output.
+
+## Implementation
+To use my little library, you need to run the makefile as `make` and then let it compile.
+
+### g++ (Recommended)
+Add the following flags:
+`-I[PATH_OF_ERCLIB] -Wl,-rpath=[PATH_OF_ERCLIB] -L[PATH_OF_ERCLIB] -lerc-crypto`
+at the **end of your G++ command,** unless you want to copy `liberc-crypto.so` to your `lib` directory (then cut the -Wl and -L). Then just include the individual headers (kobra.hpp, viper.hpp or nacha.hpp) or the full liberc-crypto.hpp one for all three, plus a few utilities.
