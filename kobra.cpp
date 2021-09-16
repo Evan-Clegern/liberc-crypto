@@ -44,11 +44,6 @@
  * 
  * 		
  * 
- * 		Did you see the reference? If not, please re-read the first paragraph :)
- * 
- * 		I am planning to author a formal paper describing this topic of Calycryptography,
- * 		so we'll see what comes of it.
- * 
  * @copyright
  * 		2021 Evan Clegern <evanclegern.work@gmail.com>
  *
@@ -96,7 +91,7 @@ namespace KOBRA {
 			byte XORblk = IV;
 			std::vector<byte> temp;
 			ushort tempIndex = 0, size = key.size();
-			for (ushort i = 0; i < plaintext.size(); i++) {
+			for (uint i = 0; i < plaintext.size(); i++) {
 				byte work = plaintext[i] ^ XORblk;
 				byte w2 = (work + key[tempIndex]);
 				w2 = ((w2 >> 3) | (w2 << 5)); // 12345678 --> 67812345
@@ -129,7 +124,7 @@ namespace KOBRA {
 			byte XORblk = IV;
 			std::vector<byte> temp;
 			ushort tempIndex = 0, size = key.size();
-			for (ushort i = 0; i < ciphertext.size(); i++) {
+			for (uint i = 0; i < ciphertext.size(); i++) {
 				byte work = ciphertext[i];
 				byte w2 = work ^ ( (work ^ key[tempIndex]) ^ (work ^ ~key[size - tempIndex]) ); // UNDO the XOR stage
 				w2 = ((w2 >> 5) | (w2 << 3)); // UNDO the ROT stage
