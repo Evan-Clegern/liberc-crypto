@@ -1,7 +1,5 @@
 # liberc-crypto
 
-*Passing CodeQL Analysis with no vulnerabilities or issues.*
-
 This is a custom cryptography library, containing three security algorithms.
 
 ### Not Another Cryptographic Hash Algorithm
