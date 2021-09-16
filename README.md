@@ -1,5 +1,8 @@
 # liberc-crypto
-This is a custom cryptography library, containing three security algorithms:
+
+*Passing CodeQL Analysis with no vulnerabilities or issues.*
+
+This is a custom cryptography library, containing three security algorithms.
 
 ### Not Another Cryptographic Hash Algorithm
 As the name alludes, NACHA is my crack at making a cryptographically-secure hashing algorithm.
