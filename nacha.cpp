@@ -88,7 +88,7 @@ namespace NACHA {
 			std::vector<byte> out;
 			//This loop: chunks per padded input
 			byte totXOR = 0;
-			for (ushort c = 0; c < (nsize / 8); c++) {
+			for (uint c = 0; c < (nsize / 8); c++) {
 				byte IND = c * 8;
 				std::vector<byte> chunk(8, 0);
 				//This loop: bytes per chunk
@@ -174,7 +174,7 @@ namespace NACHA {
 			uint nsize = tmp.size();
 			std::vector<byte> out;
 			//This loop: chunks per input
-			for (ushort c = 0; c < (nsize / 8); c++) {
+			for (uint c = 0; c < (nsize / 8); c++) {
 				byte IND = c * 8;
 				std::vector<byte> chunk(8, 0);
 				//This loop: bytes per chunk
@@ -294,7 +294,7 @@ namespace NACHA {
 				sz = tmp.size();
 			}
 			std::vector<byte> outa;
-			for (ushort c = 0; c < (sz / 5); c++) {
+			for (uint c = 0; c < (sz / 5); c++) {
 				byte IND = c * 5;
 				std::vector<byte> chunk(5, 0);
 				byte bind = 0; bool pnt = 1;
