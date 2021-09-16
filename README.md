@@ -19,9 +19,9 @@ and a Base Message, of which are then used to create an Encrypted Hidden Message
 bytes (96 bits) and a message that is up to the length of Base Message - 1, along with a one-byte IV. The cipher function
 uses a one-byte block size in Cipher Block Chaining to amplify changes, hence the minimalistic IV.
 #### Basic Operation
-1. A copy of the Base Message "B" is encrypted using the Password and IV, forming "B'"
-2. The Hidden Message "H" has each of its bytes XORed with the IV, forming "H'"
-3. "B'" and "H'" are XORed together, forming "S"
-4. Trim "S" to the length of "H'"
-5. Encrypt "S" using the Password and IV, forming "S'"
-6. Return "S'" as the operation's output.
+1. A copy of the Base Message *B* is encrypted using the Password and IV, forming *B'*
+2. The Hidden Message *H* has each of its bytes XORed with the IV, forming *H'*
+3. *B'* and *H'* are XORed together, forming *S*
+4. Trim *S* to the length of *H'*
+5. Encrypt *S* using the Password and IV, forming *S'*
+6. Return *S'* as the operation's output.
