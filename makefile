@@ -13,9 +13,9 @@ USE_INCS_FLAG := -I$(WORK_DIR)
 LIB_MK_GEN := -shared $(CXX_BASIC) $(CXX_OPTIMIZE_BASIC)
 LIB_MK_WITHNAME := -Wl,--export-dynamic,-soname=liberc-crypto.so
 
-0_test: liberc-crypto.so
-	$(GCC) $(USE_INCS_FLAG) -Wall $(CXX_OPTIMIZE_BASIC) -Wl,-rpath=$(WORK_DIR) -L$(WORK_DIR) 0_test.cpp -o 0_test -lerc-crypto
-	
+#0_test: liberc-crypto.so
+#	$(GCC) $(USE_INCS_FLAG) -Wall $(CXX_OPTIMIZE_BASIC) -Wl,-rpath=$(WORK_DIR) -L$(WORK_DIR) 0_test.cpp -o 0_test -lerc-crypto
+#	
 
 liberc-crypto.so:
 	$(GCC) $(USE_INCS_FLAG) $(CXX_COMPILE) $(CXX_OPTIMIZE_HEAVY) nacha.cpp -o nacha.o
