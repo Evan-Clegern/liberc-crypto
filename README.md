@@ -18,7 +18,8 @@ This comes from the greek root 'Calyp' for Hide, and then from Cryptography.
 Although the kobra.cpp file describes it in more depth, the overview is that it runs encryption based on a cipher function
 and a Base Message, of which are then used to create an Encrypted Hidden Message. It uses a minimum-length password of 12
 bytes (96 bits) and a message that is up to the length of Base Message - 1, along with a one-byte IV. The cipher function
-uses a one-byte block size in Cipher Block Chaining to amplify changes, hence the minimalistic IV.
+uses a one-byte block size in Cipher Block Chaining to amplify changes, hence the minimalistic IV. This could see a good
+use in extended Deniable Encryption, assuming I actually had the time to work on it.
 #### Basic Operation
 1. A copy of the Base Message *B* is encrypted using the Password and IV, forming *B'*
 2. The Hidden Message *H* has each of its bytes XORed with the IV, forming *H'*
