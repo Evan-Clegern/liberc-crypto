@@ -19,7 +19,7 @@ LIB_MK_WITHNAME := -Wl,--export-dynamic,-soname=liberc-crypto.so
 
 liberc-crypto.so:
 	$(GCC) $(USE_INCS_FLAG) $(CXX_COMPILE) $(CXX_OPTIMIZE_HEAVY) nacha.cpp -o nacha.o
-	$(GCC) $(USE_INCS_FLAG) $(CXX_COMPILE) $(CXX_OPTIMIZE_HEAVY) viper.cpp -o viper.o
+	$(GCC) $(USE_INCS_FLAG) $(CXX_COMPILE) $(CXX_OPTIMIZE_HEAVY) viper-1.cpp -o viper-1.o
 	$(GCC) $(USE_INCS_FLAG) $(CXX_COMPILE) $(CXX_OPTIMIZE_HEAVY) kobra.cpp -o kobra.o
-	$(GCC) $(LIB_MK_GEN) $(LIB_MK_WITHNAME) nacha.o viper.o kobra.o -o liberc-crypto.so
-	rm nacha.o viper.o kobra.o
+	$(GCC) $(LIB_MK_GEN) $(LIB_MK_WITHNAME) nacha.o viper-1.o kobra.o -o liberc-crypto.so
+	rm nacha.o viper-1.o kobra.o
