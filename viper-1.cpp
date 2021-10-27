@@ -1,5 +1,5 @@
 /********!
- * @file viper.cpp
+ * @file viper-1.cpp
  * 
  * @copyright
  * 		Copyright 2021 Evan Clegern <evanclegern.work@gmail.com>
@@ -19,11 +19,11 @@
  * 
  * 
  * @details
- * 		VIPER uses a Lai-Massey scheme, with both Permutation functions and
+ * 		VIPER-1 uses a Lai-Massey scheme, with both Permutation functions and
  * 		Add-Rotate-XOR functions for the Half-Round, and a simple Affine
  * 		function for the Round function.
  * 
- * 		VIPER is a simple block cipher with a sixty-byte (480-bit)
+ * 		VIPER-1 is a simple block cipher with a sixty-byte (480-bit)
  * 		key and with a block size of 24 bytes (192 bits). It was
  * 		designed with resistance to timing based attacks in the
  * 		simpler functions, and possesses simple resistances to
@@ -68,7 +68,7 @@
 
 #include "viper.hpp"
 namespace ERCLIB {
-	namespace VIPER {
+	namespace VIPER1 {
 		namespace funcs {
 			inline const bytevec reverseVector(const bytevec input) {
 				bytevec temp(input.size(), 0);
@@ -509,7 +509,7 @@ namespace ERCLIB {
 	//! have a header chunk with three bytes, and then all necessary null bytes PRIOR to data - byte #1 and #2 are a magic number; #3 is the number of padded null bytes
 	//! i.e. 0xA5 0x5A 0x02 0x00 0x00 {data} -  we only need to pad UP TO 21 bytes.
 
-	const bytevec encryptData(const bytevec Plaintext, const bytevec Key, const bytevec IV) {
+	const bytevec encryptData_VIPER1(const bytevec Plaintext, const bytevec Key, const bytevec IV) {
 		byte NullBytes = 24 - ((3 + Plaintext.size()) % 24);
 		bytevec headerTmp(NullBytes + 3, 0);
 		headerTmp[0] = byte(0xA5);
@@ -518,10 +518,10 @@ namespace ERCLIB {
 		for (byte i : Plaintext) {
 			headerTmp.push_back(i);
 		}
-		return VIPER::encrypt(headerTmp, Key, IV);
+		return VIPER1::encrypt(headerTmp, Key, IV);
 	}
-	const bytevec decryptData(const bytevec Ciphertext, const bytevec Key, const bytevec IV) {
-		bytevec temp = VIPER::decrypt(Ciphertext, Key, IV);
+	const bytevec decryptData_VIPER1(const bytevec Ciphertext, const bytevec Key, const bytevec IV) {
+		bytevec temp = VIPER1::decrypt(Ciphertext, Key, IV);
 		assert(temp[0] == 0xA5); assert(temp[1] == 0x5A);
 		byte Padding = temp[2];
 		bytevec newer;
