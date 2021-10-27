@@ -53,3 +53,5 @@ at the **end of your G++ command,** unless you want to copy `liberc-crypto.so` t
 Runtime uint <--> ushort issues in loops has been corrected in NACHA and KOBRA. Library is now passing CodeQL analysis.
 #### Oct 18
 Tweaks to documentation of algorithms.
+#### Oct 27
+Added a side-project I'd been working on that allows the creation and management of Substitution and Permutation boxes.
