@@ -12,7 +12,7 @@ typedef std::vector<unsigned char> bytevec;
 typedef std::array<bytevec, 2> vecpair;
 
 namespace ERCLIB {
-	namespace VIPER {
+	namespace VIPER1 {
 		namespace funcs {
 			//Two different, invertible half-round functions
 			extern const bytevec reverseVector(const bytevec input);
@@ -37,8 +37,8 @@ namespace ERCLIB {
 		extern const bytevec decrypt(const bytevec input, const bytevec key, const bytevec IV);
 	}
 	extern const std::string convertBytesToStr(const bytevec N);
-	extern const bytevec encryptData(const bytevec Plaintext, const bytevec Key, const bytevec IV);
-	extern const bytevec decryptData(const bytevec Ciphertext, const bytevec Key, const bytevec IV);
+	extern const bytevec encryptData_VIPER1(const bytevec Plaintext, const bytevec Key, const bytevec IV);
+	extern const bytevec decryptData_VIPER1(const bytevec Ciphertext, const bytevec Key, const bytevec IV);
 }
 
 #endif
