@@ -38,11 +38,11 @@ bytes (96 bits) and a message that is up to the length of Base Message - 1, alon
 uses a one-byte block size in Cipher Block Chaining to amplify changes, hence the minimalistic IV. This could see a good
 use in extended Deniable Encryption, assuming I actually had the time to work on it.
 #### Basic Encryption Operation
-1. A copy of the Base Message *B* is encrypted with VIPER-1, using the Password and IV, forming *B'*
+1. A copy of the Base Message *B* is encrypted with ARX, using the Password and IV, forming *B'*.
 2. The Hidden Message *H* has each of its bytes XORed with the IV, forming *H'*
 3. *B'* and *H'* are XORed together, forming *S*
 4. Trim *S* to the length of *H'*
-5. Encrypt *S* using the Password and IV, forming *S'*
+5. Encrypt *S* using the Password and IV through ARX, forming *S'*
 6. Return *S'* as the operation's output.
 
 ## Implementation
