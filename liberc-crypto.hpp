@@ -30,7 +30,7 @@
 #ifndef ERCLIB_Crypto
 #define ERCLIB_Crypto
 
-#include "viper.hpp" //! the VIPER Block Cipher
+#include "viper-1.hpp" //! the VIPER-1 Block Cipher
 #include "kobra.hpp" //! the KOBRA Calypcryptographic Algorithm
 #include "nacha.hpp" //! the NACHA Hash Algorithm
 
