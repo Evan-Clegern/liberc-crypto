@@ -6,7 +6,7 @@ This is a custom cryptography library, containing three security algorithms.
 As the name alludes, NACHA is my crack at making a cryptographically-secure hashing algorithm.
 It is inspired by Keccak (SHA-3) and MD5, utilizing a sponge-like system and several permutation devices.
 
-### VIPER
+### VIPER-1
 This is a block cipher, using the less-common Lai-Massey Scheme to provide its schedule for encryption. Unfortunately,
 it suffers from a lack of Diffusion (256 bits are changed in a 1,920 bit message when 1 bit of plaintext is modified), 
 and is built using a Cipher Block Chaining mode and with a modified Lai-Massey Scheme. 
@@ -24,6 +24,11 @@ Assuming Permutation Function *P(x, k)*, Round Function *R(x, k)*, Half-Round Fu
 8. Perform *P(L'', **K**n+4)* and *P(L'', **K**n+4)* to form *EL* and *ER*.
 9. Return pair *E* , consisting of *EL* and *ER*.
 
+### VIPER-2
+This is an improved version of VIPER-1 that uses the "customizable.hpp" permutation/substitution system to achieve
+better security through diffusion and confusion. It will be fully documented when completed.
+
+
 ### KOBRA
 This is a new type of encryption algorithm - one I have dubbed "Calycryptographic."
 This comes from the greek root 'Calyp' for Hide, and then from Cryptography.
@@ -33,7 +38,7 @@ bytes (96 bits) and a message that is up to the length of Base Message - 1, alon
 uses a one-byte block size in Cipher Block Chaining to amplify changes, hence the minimalistic IV. This could see a good
 use in extended Deniable Encryption, assuming I actually had the time to work on it.
 #### Basic Encryption Operation
-1. A copy of the Base Message *B* is encrypted with VIPER, using the Password and IV, forming *B'*
+1. A copy of the Base Message *B* is encrypted with VIPER-1, using the Password and IV, forming *B'*
 2. The Hidden Message *H* has each of its bytes XORed with the IV, forming *H'*
 3. *B'* and *H'* are XORed together, forming *S*
 4. Trim *S* to the length of *H'*
