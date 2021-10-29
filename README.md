@@ -24,10 +24,6 @@ Assuming Permutation Function *P(x, k)*, Round Function *R(x, k)*, Half-Round Fu
 8. Perform *P(L'', **K**n+4)* and *P(L'', **K**n+4)* to form *EL* and *ER*.
 9. Return pair *E* , consisting of *EL* and *ER*.
 
-### VIPER-2
-This is an improved version of VIPER-1 that uses the "customizable.hpp" permutation/substitution system to achieve
-better security through diffusion and confusion. It will be fully documented when completed.
-
 
 ### KOBRA
 This is a new type of encryption algorithm - one I have dubbed "Calycryptographic."
