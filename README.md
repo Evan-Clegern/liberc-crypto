@@ -2,7 +2,7 @@
 
 This is a custom cryptography library, containing three security algorithms.
 
-### Not Another Cryptographic Hash Algorithm
+### NACHA (Not *Another* Cryptographic Hash Algorithm)
 As the name alludes, NACHA is my crack at making a cryptographically-secure hashing algorithm.
 It is inspired by Keccak (SHA-3) and MD5, utilizing a sponge-like system and several permutation devices.
 
