@@ -5,6 +5,13 @@ This is a custom cryptography library, containing three security algorithms.  [!
 ### NACHA (Not *Another* Cryptographic Hash Algorithm)
 As the name alludes, NACHA is my crack at making a cryptographically-secure hashing algorithm.
 It is inspired by Keccak (SHA-3) and MD5, utilizing a sponge-like system and several permutation devices.
+#### Basic Overview
+Assuming three permutation functions, *PA(x)*, *PB(x)*, *PC(x)*, a 'mix' function *M(x, tog)*, an 'intertwine' function *ITW(xa, xb, c)*, input message *m*, output capacity *z*, block size A *ba*, and block size B *bb*.
+1. Split *m* into a vector of vectors, of size *bb*, padding partial blocks with portions of the vector **{11h, 22h, 33h, 44h, 55h, 66h, 77h}**, to make *m'*. Maintain a blank vector of vectors, *m".
+2. For each vector in *m'* as *x*, toggle between appending just *PC(x)* to *m"*, and also appending *M(x, 0)* and *PA(M(x, 1))* to *m"*, starting at **only** *PC(x)* and toggling after that.
+3. Append *M(m, 1)* to *m"*; then, set *m'* to a "fused" version of *m"* that is then split into blocks of size *ba*. Clear *m"*.
+**This section is still in-progress. I will be updating this NACHA description when I can.**
+
 
 ### VIPER-1
 This is a block cipher, using the less-common Lai-Massey Scheme to provide its schedule for encryption. Unfortunately,
@@ -50,9 +57,11 @@ Add the following flags:
 at the **end of your G++ command,** unless you want to copy `liberc-crypto.so` to your `lib` directory (then cut the -Wl and -L). Then just include the individual headers (kobra.hpp, viper.hpp or nacha.hpp) or the full liberc-crypto.hpp one for all three, plus a few utilities.
 
 ## Changelog
-#### Sep 16
+#### Sep 16 '21
 Runtime uint <--> ushort issues in loops has been corrected in NACHA and KOBRA. Library is now passing CodeQL analysis.
-#### Oct 18
+#### Oct 18 '21
 Tweaks to documentation of algorithms.
-#### Oct 27
+#### Oct 27 '21
 Added a side-project I'd been working on that allows the creation and management of Substitution and Permutation boxes.
+#### Aug 25 '22
+Added some memory sanitation and conservation to the NACHA program.
