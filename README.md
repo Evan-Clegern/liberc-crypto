@@ -1,6 +1,6 @@
 # liberc-crypto
 
-This is a custom cryptography library, containing three security algorithms.
+This is a custom cryptography library, containing three security algorithms.  [![CodeQL](https://github.com/Evan-Clegern/liberc-crypto/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Evan-Clegern/liberc-crypto/actions/workflows/codeql-analysis.yml)
 
 ### NACHA (Not *Another* Cryptographic Hash Algorithm)
 As the name alludes, NACHA is my crack at making a cryptographically-secure hashing algorithm.
