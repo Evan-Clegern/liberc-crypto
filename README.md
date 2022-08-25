@@ -10,7 +10,8 @@ Assuming three permutation functions, *PA(x)*, *PB(x)*, *PC(x)*, a 'mix' functio
 1. Split *m* into a vector of vectors, of size *bb*, padding partial blocks with portions of the vector **{11h, 22h, 33h, 44h, 55h, 66h, 77h}**, to make *m'*. Maintain a blank vector of vectors, *m".
 2. For each vector in *m'* as *x*, toggle between appending just *PC(x)* to *m"*, and also appending *M(x, 0)* and *PA(M(x, 1))* to *m"*, starting at **only** *PC(x)* and toggling after that.
 3. Append *M(m, 1)* to *m"*; then, set *m'* to a "fused" version of *m"* that is then split into blocks of size *ba*. Clear *m"*.
-**This section is still in-progress. I will be updating this NACHA description when I can.**
+
+#### This section is still in-progress. I will be updating this NACHA description when I can.
 
 
 ### VIPER-1
