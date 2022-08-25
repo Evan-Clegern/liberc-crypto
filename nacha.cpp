@@ -35,7 +35,7 @@
  * 		Redesign made the algorithm much more Clock-efficient and is
  * 		still very stable (if not more) for cryptographic hashing.
  ********/
-namespace ERCLIB_v2 {
+namespace ERCLIB {
 namespace NACHA {
 	namespace low {
 		/********!
