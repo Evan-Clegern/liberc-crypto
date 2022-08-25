@@ -35,7 +35,7 @@
  * 		Redesign made the algorithm much more Clock-efficient and is
  * 		still very stable (if not more) for cryptographic hashing.
  ********/
-namespace ERCLIB {
+namespace ERCLIB_v2 {
 namespace NACHA {
 	namespace low {
 		/********!
@@ -65,12 +65,16 @@ namespace NACHA {
 		 * 			take out, and then XORing that with the cumulative
 		 * 			XOR of the input.
 		 * 
+		 * @note
+		 * 			Added additional safety measures with an automatic
+		 * 			clearing of used values; basic memory sanitation.
+		 * 
 		 * @exception std::invalid_argument
 		 * 			If \c Input is empty, then there is no point in
 		 * 			attempting to permute the filler bytes.
 		 ********/
 		inline std::vector<byte> permuteA(const std::vector<byte> &Input) {
-			byte Underflow = 8 - (Input.size() % 8);
+			const byte Underflow = 8 - (Input.size() % 8);
 			std::vector<byte> tmp = Input;
 			if (Underflow > 0) {
 				std::vector<byte> append = {0xDE, 0xAD, 0xBE, 0xEF};
@@ -80,6 +84,8 @@ namespace NACHA {
 					if (app == 3) {app = 0;} else {app++;}
 					cnt++;
 				}
+				cnt ^= cnt;
+				app ^= app;
 			} else if (tmp.size() == 0) {
 				throw std::invalid_argument("No data provided to permuteA!");
 			}
@@ -87,8 +93,9 @@ namespace NACHA {
 
 			std::vector<byte> out;
 			//This loop: chunks per padded input
+			
 			byte totXOR = 0;
-			for (uint c = 0; c < (nsize / 8); c++) {
+			for (ushort c = 0; c < (nsize / 8); c++) {
 				byte IND = c * 8;
 				std::vector<byte> chunk(8, 0);
 				//This loop: bytes per chunk
@@ -97,17 +104,21 @@ namespace NACHA {
 					totXOR ^= n;
 					//This loop: bits per byte
 					for (byte B = 0; B < 8; B++) {
-						bool bit = n & 1;
+						bool bit = (n) & 1;
 						n >>= 1;
 						byte J = byte(0 + bit) << i;
 						chunk[B] |= J;
+						J ^= J;
 					}
+					n ^= n;
 				}
+				IND ^= IND;
 				//This loop: move chunk to output
 				for (byte i : chunk) {
 					out.push_back(i);
 				}
 			}
+			tmp.clear();
 			// This XORs each output byte to the 'inverse position' byte in the permuted "arch."
 			// Ensure that, for larger inputs, their input chunks will not match up at all with their permuted chunks.
 			// And if it's a smaller input, it'll at least occur in a different order.
@@ -118,7 +129,10 @@ namespace NACHA {
 				byte n = out.at(ind), j = out.at(i);
 				
 				out.push_back( ((n >> 4) | (j << 4)) ^ (~(j & n) ^ totXOR) );
+				n ^= n;
+				j ^= j;
 			}
+			totXOR ^= totXOR;
 			return out;
 		}
 		
@@ -152,12 +166,16 @@ namespace NACHA {
 		 * 			This allows for a more "shuffled" system of
 		 * 			bit permutation.
 		 * 
+		 * @note
+		 * 			Added additional safety measures with an automatic
+		 * 			clearing of used values; basic memory sanitation.
+		 * 
 		 * @exception std::invalid_argument
 		 * 			If \c Input is empty, then there is no point in
 		 * 			attempting to permute the filler bytes.
 		 ********/
 		inline std::vector<byte> permuteB(const std::vector<byte> &Input) {
-			byte Underflow = 8 - (Input.size() % 8);
+			const byte Underflow = 8 - (Input.size() % 8);
 			std::vector<byte> tmp = Input;
 			//instead of appending 'DEADBEEF', we append 'FEEDC0DE'
 			if (Underflow > 0) {
@@ -168,14 +186,16 @@ namespace NACHA {
 					if (app == 3) {app = 0;} else {app++;}
 					cnt++;
 				}
+				cnt ^= cnt;
+				app ^= app;
 			} else if (tmp.size() == 0) {
 				throw std::invalid_argument("No data provided to permuteB!");
 			}
-			uint nsize = tmp.size();
+			const uint nsize = tmp.size();
 			std::vector<byte> out;
 			//This loop: chunks per input
-			for (uint c = 0; c < (nsize / 8); c++) {
-				byte IND = c * 8;
+			for (ushort c = 0; c < (nsize / 8); c++) {
+				const byte IND = c * 8;
 				std::vector<byte> chunk(8, 0);
 				//This loop: bytes per chunk
 				for (byte i=0;i<8;i++) {
@@ -187,13 +207,17 @@ namespace NACHA {
 						if (val < 0) val += 8;
 						n >>= 1;
 						chunk[B] |= (0 + bit) << val;
+						val ^= val;
 					}
+					n ^= n;
 				}
 				//This loop: move chunk to output
-				for (byte i : chunk) {
+				for (byte& i : chunk) {
 					out.push_back(i);
+					i ^= i;
 				}
 			}
+			tmp.clear();
 			return out;
 		}
 		
@@ -229,6 +253,10 @@ namespace NACHA {
 		 * 			reduce similarity of outputs, while upholding
 		 * 			deterministic properties.
 		 * 
+		 * @note
+		 * 			Added additional safety measures with an automatic
+		 * 			clearing of used values; basic memory sanitation.
+		 * 
 		 * @exception std::invalid_argument
 		 * 			If \c Input is empty, then there is no point in
 		 * 			attempting to permute the filler bytes.
@@ -250,16 +278,21 @@ namespace NACHA {
 					outa.push_back( (t >> 3) ^ (j << 5) ^ (~t & j) );
 				}
 				N = !N;
+				t ^= t;
+				j ^= j;
 			}
+			Permuted.clear();
 			std::vector<byte> out;
-			for (byte i : outa) {
+			for (byte& i : outa) {
 				if (N) {
 					out.push_back( ((i * (~i >> 4)) % 256) ^ i);
 				} else {
 					out.push_back( (((i * (i >> 3)) + (~i >> 5)) % 256 ) ^ i);
 				}
 				N = !N;
+				i ^= i;
 			}
+			outa.clear();
 			return out;
 		}
 		/*******!
@@ -273,6 +306,10 @@ namespace NACHA {
 		 * @param [in] form
 		 * 			Whether or not to invert certain operations.
 		 * 
+		 * @note
+		 * 			Added additional safety measures with an automatic
+		 * 			clearing of used values; basic memory sanitation.
+		 * 
 		 * @returns
 		 * 			mixed-bit byte vector.
 		 ********/
@@ -282,7 +319,7 @@ namespace NACHA {
 			//! Form causes a cool inverse, but that's about it
 			uint sz = Input.size();
 			std::vector<byte> tmp = Input;
-			byte Underflow = 5 - (sz % 5);
+			const byte Underflow = 5 - (sz % 5);
 			if (Underflow > 0) {
 				std::vector<byte> d = {0xCA,  0xBE, 0xDF};
 				byte cnt=0, app = 0;
@@ -292,10 +329,12 @@ namespace NACHA {
 					cnt++;
 				}
 				sz = tmp.size();
+				cnt ^= cnt;
+				app ^= app;
 			}
 			std::vector<byte> outa;
-			for (uint c = 0; c < (sz / 5); c++) {
-				byte IND = c * 5;
+			for (ushort c = 0; c < (sz / 5); c++) {
+				const byte IND = c * 5;
 				std::vector<byte> chunk(5, 0);
 				byte bind = 0; bool pnt = 1;
 				byte last = tmp[sz - 1];
@@ -314,16 +353,22 @@ namespace NACHA {
 						}
 						pnt = !pnt;
 						chunk[i] ^= J;
+						
+						J ^= J;
 					}
 					last = n;
+					n ^= n;
 				}
+				bind ^= bind;
 				//This loop: move chunk to output, inverting every other byte
 				bool inv = 0;
-				for (byte i : chunk) {
+				for (byte& i : chunk) {
 					if (inv) outa.push_back(~i); else outa.push_back(i + form);
 					inv = !inv;
+					i ^= i;
 				}
 			}
+			tmp.clear();
 			std::vector<byte> outb;
 			bool toggle = 0;
 			for (uint i =0; i < sz - 1; i++) {
@@ -332,7 +377,9 @@ namespace NACHA {
 				if (form) {J ^= (~outa[i] >> 3) | (outa[i] << 5);}
 				toggle = !toggle;
 				outb.push_back(J);
+				J ^= J;
 			}
+			outa.clear();
 			return outb;
 		}
 		/********!
@@ -366,6 +413,12 @@ namespace NACHA {
 				
 				uint J = a * b; byte N = (J + (c ^ d)) % 256;
 				temp2.push_back(a ^ b ^ c ^ N ^ ~((N << 4) ^ d >> 4));
+				
+				a ^= a;
+				b ^= b;
+				c ^= c;
+				d ^= d;
+				N ^= N;
 			}
 			return temp2;
 		}
@@ -388,13 +441,15 @@ namespace NACHA {
 		}
 		ushort blocks = tsize / osize;
 		std::vector<byte> curb;
-		for (byte i : tmp) {
+		for (byte& i : tmp) {
 			curb.push_back(i);
 			if (curb.size() == blocks) {
 				out.push_back(curb);
 				curb.clear();
 			}
+			i ^= i;
 		}
+		tmp.clear();
 		return out;
 	}
 	
@@ -462,7 +517,7 @@ namespace NACHA {
 			if (toggle) NCHK.push_back(low::permuteA(i));
 			toggle = !toggle;
 		}
-		std::vector<byte> temp = low::mix(fuse(NCHK),1); NCHK.clear();
+		std::vector<byte> temp = low::mix(fuse(NCHK),1); NCHK.clear(); CHK.clear();
 		
 		// Compress using XOR
 		uint siz = temp.size(); ushort add = _capac - (siz % _capac);
@@ -472,7 +527,7 @@ namespace NACHA {
 			add--;
 		}
 		siz = temp.size();
-		ushort ratio = (siz / _capac);
+		const ushort ratio = (siz / _capac);
 		std::vector<byte> temp2; std::vector<byte> blk(ratio, 0);
 		ushort blkIn = 0; toggle = 0;
 		byte lastxor = (~temp[siz - 1]) >> 3;
@@ -498,6 +553,8 @@ namespace NACHA {
 			byte T = ((N + lastxor) * (N + (i ^ _capac))) % 256;
 			temp.push_back( T );
 		}
+		lastxor ^= lastxor;
+		blk.clear();
 		//intertwine with a vector of _capac length, but is just 0 - 255
 		return low::intertwine(temp2, temp, _capac);
 	}
