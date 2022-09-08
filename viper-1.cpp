@@ -192,7 +192,10 @@ namespace ERCLIB {
 				// XORs key-and-input "duality modulo" with a blended rotation and XOR of the input and key.
 				bytevec tmp;
 				for (byte i : diff) {
-					tmp.push_back( ((key ^ i) & ((i >> 4) | (key << 4))) ^ ((key * i) % (key ^ i)) );
+					//! @bug  In some cases, the Key byte is equal to the Diff byte, causing a divide-by-zero.
+					byte divi = (key ^ i);
+					if (divi == 0) divi = 1;
+					tmp.push_back( ((key ^ i) & ((i >> 4) | (key << 4))) ^ ((key * i) % divi) );
 				}
 				return tmp;
 			}
