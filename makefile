@@ -23,3 +23,6 @@ liberc-crypto.so:
 	$(GCC) $(USE_INCS_FLAG) $(CXX_COMPILE) $(CXX_OPTIMIZE_HEAVY) kobra.cpp -o kobra.o
 	$(GCC) $(LIB_MK_GEN) $(LIB_MK_WITHNAME) nacha.o viper-1.o kobra.o -o liberc-crypto.so
 	rm nacha.o viper-1.o kobra.o
+
+test: liberc-crypto.so
+	$(GCC) -L. $(USE_INCS_FLAG) $(CXX_BASIC) -fPIC test.cpp -o test -Wl,-rpath=. -lerc-crypto
