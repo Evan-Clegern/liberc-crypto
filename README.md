@@ -50,9 +50,9 @@ use in extended Deniable Encryption, assuming I actually had the time to work on
 6. Return *S'* as the operation's output.
 
 ## Implementation
-To use my little library, you need to run the makefile as `make` and then let it compile.
+To use my little library, you need to run the makefile as `make` and then let it compile. For the test file, afterwards run `make test`.
 
-### g++ (Recommended)
+### g++
 Add the following flags:
 `-I[PATH_OF_ERCLIB] -Wl,-rpath=[PATH_OF_ERCLIB] -L[PATH_OF_ERCLIB] -lerc-crypto`
 at the **end of your G++ command,** unless you want to copy `liberc-crypto.so` to your `lib` directory (then cut the -Wl and -L). Then just include the individual headers (kobra.hpp, viper.hpp or nacha.hpp) or the full liberc-crypto.hpp one for all three, plus a few utilities.
