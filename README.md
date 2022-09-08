@@ -71,11 +71,18 @@ Added a testing file and corrected a bug found by CodeQL.
 
 
 ## Test File Output
-When compiled and run, the test file should return some data, most notably:
-`Hashes of the funny text:
-40 94 198 36 159 135 47 153 217 42 148 140 212 14 50 236 
-24 12 230 210 42 36 74 30 75 44 39 30 37 53 157 32 
-Encrypting...
-30 1b 86 e0 9f 34 6a 97 51 e3 e2 ff bc cd 89 3e 61 dc 65 b7 f0 a3 7c fb e2 d9 ea d4 8e af 4 c1 58 13 4e 79 54 c9 bd 6d 99 8b f0 6 d2 59 48 56 eb f7 4e bf 2e 48 94 44 b9 8f 27 37 6d 9d 2e a5 77 99 71 b5 61 c9 71 40 3d 8e 43 15 c1 af be 9c 69 1a 9c 60 61 4 d4 a2 52 c1 10 3 16 a3 14 89 1f aa 4e f 4f c5 1 f5 3c 17 4c 95 86 cc 52 e3 5 d2 84 e d6 69 55 e9 5e 10 9b e9 de 14 76 ae 31 d0 3b e8 5 52 65 55 f4 22 a2 f3 ef 81 ba c6 af 38 5b 5d d8 30 d0 c5 21 f0 d2 ee df dd a6 eb c9 83 75 a5 1e 10 a5 9b 38 4d c fe d6 9b 7d b9 88 e4 b5 7a e6 2 43 4c 10 c0 ff f0 e4 87 2a cf 71 6 30 c2 71 c4 eb 49 3f 6c c8 f e3 71 52 cc 9c 69 5b cf 68 5e d6 8f 36 23 f0 5a 86 8 ff f 23 c1 fb 92 4e b0 3d eb e3 54 7b 30 e8 fc 97 6 d7 23 6f 14 57 6c 9e 1a f8 a4 c1 9b e8 96 6c e2 9d 6 9c 9d 89 46 1 6a ` and then 
+When compiled and run, the test file should return some data:
+### Top-Of-Output Hashes
+`Hashes of the funny text:`
+
+`40 94 198 36 159 135 47 153 217 42 148 140 212 14 50 236 `
+
+`24 12 230 210 42 36 74 30 75 44 39 30 37 53 157 32`
+
+### Encryption Output
+`30 1b 86 e0 9f 34 6a 97 51 e3 e2 ff bc cd 89 3e 61 dc 65 b7 f0 a3 7c fb e2 d9 ea d4 8e af 4 c1 58 13 4e 79 54 c9 bd 6d 99 8b f0 6 d2 59 48 56 eb f7 4e bf 2e 48 94 44 b9 8f 27 37 6d 9d 2e a5 77 99 71 b5 61 c9 71 40 3d 8e 43 15 c1 af be 9c 69 1a 9c 60 61 4 d4 a2 52 c1 10 3 16 a3 14 89 1f aa 4e f 4f c5 1 f5 3c 17 4c 95 86 cc 52 e3 5 d2 84 e d6 69 55 e9 5e 10 9b e9 de 14 76 ae 31 d0 3b e8 5 52 65 55 f4 22 a2 f3 ef 81 ba c6 af 38 5b 5d d8 30 d0 c5 21 f0 d2 ee df dd a6 eb c9 83 75 a5 1e 10 a5 9b 38 4d c fe d6 9b 7d b9 88 e4 b5 7a e6 2 43 4c 10 c0 ff f0 e4 87 2a cf 71 6 30 c2 71 c4 eb 49 3f 6c c8 f e3 71 52 cc 9c 69 5b cf 68 5e d6 8f 36 23 f0 5a 86 8 ff f 23 c1 fb 92 4e b0 3d eb e3 54 7b 30 e8 fc 97 6 d7 23 6f 14 57 6c 9e 1a f8 a4 c1 9b e8 96 6c e2 9d 6 9c 9d 89 46 1 6a ` 
+### Final Output (Decrypted-to-string)
 `According to all known laws of aviation, there is no way that a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway. Because bees don’t care what humans think is impossible.`
+
+
 This is the general test case for NACHA (128 and 128E) and VIPER -- the opening part of the Bee Movie.
