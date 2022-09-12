@@ -29,12 +29,12 @@ int main() {
 	std::cout << std::hex;
 	
 	std::cout << "Encrypting...\n";
-	auto Encrypted = ERCLIB::encryptData(Hashable, Key, Hash128);
+	auto Encrypted = ERCLIB::encryptData_VIPER1(Hashable, Key, Hash128);
 	for (byte i : Encrypted) {
 		std::cout << int(i) << ' ';
 	}
 	std::cout << "\nDecrypting...\n";
-	auto Decrypted = ERCLIB::decryptData(Encrypted, Key, Hash128);
+	auto Decrypted = ERCLIB::decryptData_VIPER1(Encrypted, Key, Hash128);
 	for (byte i : Decrypted) {
 		std::cout << int(i) << ' ';
 	}
